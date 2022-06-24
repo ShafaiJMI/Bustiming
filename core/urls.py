@@ -9,7 +9,9 @@ router.register(r'stops', views.StopViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path('timing/', views.TimeView.as_view()),
-    path('timing/<int:pk>/', views.StopTiming.as_view()),
-    path('stops/', views.StopView.as_view()),
+    path('',views.index,name="home"),
+    path('timing/', views.TimeView.as_view(),name="timing"),
+    path('timing/<int:pk>/', views.StopTiming.as_view(),name="busstop_timing"),
+    path('stops/', views.StopView.as_view(),name="stop"),
+    path('Bus/', views.BusView.as_view(),name="bus"),
 ]

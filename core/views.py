@@ -1,23 +1,33 @@
-#from django.shortcuts import render
-#from rest_framework import viewsets
+from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from .serializers import TimeSerializer,StopSerializer,BusSerializer
+from .models import BusTiming,BusStop,Bus
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from .serializers import TimeSerializer,StopSerializer
-from .models import BusTiming
-#from django.contrib.auth.models import User
+
 # Create your views here.
-class StopTiming(APIView):
-	def get(self,request,pk):
-		queryset = BusTiming.objects.get(pk=pk)
-		serializer = StopSerializer(queryset)
-		return Response(serializer.data)
-class StopView(APIView):
-	def get(self,request):
-		queryset = BusTiming.objects.all()
-		serializer = StopSerializer(queryset,many=True)
-		return Response(serializer.data)
+def index(request):
+	return render(request,'index.html')
+
 class TimeView(APIView):
 	def get(self,request):
 		queryset = BusTiming.objects.all()
 		serializer = TimeSerializer(queryset,many=True)
-		return Response(serializer.data)
+		return JsonResponse(serializer.data,safe=False)
+
+class StopTiming(APIView):
+	def get(self,request,pk):
+		queryset = BusTiming.objects.get(pk=pk)
+		serializer = TimeSerializer(queryset)
+		return JsonResponse(serializer.data,safe=False)
+
+class StopView(APIView):
+	def get(self,request):
+		queryset = BusStop.objects.all()
+		serializer = StopSerializer(queryset,many=True)
+		return JsonResponse(serializer.data,safe=False)
+
+class BusView(APIView):
+	def get(self,request):
+		queryset = Bus.objects.all()
+		serializer = BusSerializer(queryset,many=True)
+		return JsonResponse(serializer.data,safe=False)
